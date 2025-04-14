@@ -1,0 +1,19 @@
+{
+  "id": "acode.python.fmt",
+  "name": "Ruff Python Formatter",
+  "main": "main.js",
+  "version": "0.1.0",
+  "readme": "readme.md",
+  "icon": "icon.png",
+  "files": [],
+  "minVersionCode": 290,
+  "license": "MIT",
+  "changelogs": "changelogs.md",
+  "keywords": ["python", "fmt", "ruff", "formatter"],
+  "price": 0,
+  "author": {
+    "name": "Raunak",
+    "email": "raunak@bajrangcoder.dev",
+    "github": "bajrangCoder"
+  }
+}
