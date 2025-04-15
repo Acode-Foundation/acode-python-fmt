@@ -2,7 +2,7 @@
   "id": "acode.python.fmt",
   "name": "Ruff Python Formatter",
   "main": "main.js",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "readme": "readme.md",
   "icon": "icon.png",
   "files": [],

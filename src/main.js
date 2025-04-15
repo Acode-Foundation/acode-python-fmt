@@ -116,7 +116,6 @@ class RuffFormatter {
   }
 
   get settingsObj() {
-      console.log(this.settings.line_length)
     return {
       list: [
         {
