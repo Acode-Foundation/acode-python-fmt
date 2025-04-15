@@ -7,18 +7,29 @@ const loader = acode.require("loader");
 class RuffFormatter {
   constructor() {
     if (!appSettings.value[plugin.id]) {
-      appSettings.value[plugin.id] = {
-        indent_style: "space",
-        indent_width: 4,
-        line_length: 88,
-        line_ending: "auto",
-        quote_style: "double",
-        skip_magic_trailing_comma: false,
-        docstring_code_format: false,
-        // docstring_code_line_length: "dynamic",
-      };
-      appSettings.update(false);
+      this._saveSetting();
+    } else {
+      if (
+        !Object.prototype.hasOwnProperty.call(this.settings, "line_length")
+      ) {
+        delete appSettings.value[plugin.id];
+        appSettings.update(false);
+        this._saveSetting();
+      }
     }
+  }
+  
+  _saveSetting() {
+    appSettings.value[plugin.id] = {
+      indent_style: "space",
+      indent_width: 4,
+      line_length: 88,
+      line_ending: "auto",
+      quote_style: "double",
+      skip_magic_trailing_comma: false,
+      docstring_code_format: false,
+    };
+    appSettings.update(false);
   }
 
   async init() {
@@ -79,11 +90,7 @@ class RuffFormatter {
         "quote-style": this.settings.quote_style,
         "line-ending": this.settings.line_ending,
         "skip-magic-trailing-comma": this.settings.skip_magic_trailing_comma,
-        "docstring-code-format": this.settings.docstring_code_format,
-        // "docstring-code-line-length":
-        //   this.settings.docstring_code_line_length === "dynamic"
-        //     ? undefined
-        //     : Number.parseInt(this.settings.docstring_code_line_length),
+        "docstring-code-format": this.settings.docstring_code_format
       },
     });
   }
@@ -109,6 +116,7 @@ class RuffFormatter {
   }
 
   get settingsObj() {
+      console.log(this.settings.line_length)
     return {
       list: [
         {
@@ -156,7 +164,7 @@ class RuffFormatter {
           text: "Quote Style",
           value: this.settings.quote_style,
           info: "The style of string quotes to use (default: double)",
-          select: ["double", "single"],
+          select: ["double", "single", "preserve"],
         },
         {
           key: "skip_magic_trailing_comma",
@@ -172,21 +180,6 @@ class RuffFormatter {
           checkbox: !!this.settings.docstring_code_format,
           info: "Format code blocks in docstrings",
         },
-        // {
-        //   key: "docstring_code_line_length",
-        //   text: "Docstring Code Line Length",
-        //   value: this.settings.docstring_code_line_length,
-        //   info: "Maximum line length for code blocks in docstrings (dynamic or number)",
-        //   prompt: "Docstring Code Line Length",
-        //   promptType: "text",
-        //   promptOption: [
-        //     {
-        //       required: true,
-        //       match: /^(dynamic|\d+)$/,
-        //       placeholder: "dynamic or number",
-        //     },
-        //   ],
-        // },
       ],
       cb: (key, value) => {
         this.settings[key] = value;
